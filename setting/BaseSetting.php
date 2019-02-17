@@ -14,7 +14,7 @@ class BaseSetting {
     public $_view;
     public $_gameName;
 
-    public function __construct()
+    protected function __construct()
     {
         $this->_domain = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://').$_SERVER['HTTP_HOST'];
         $this->_uri = basename($this->_domain.$_SERVER['SCRIPT_NAME']);
@@ -46,18 +46,25 @@ class BaseSetting {
         $this->_view = $view;
     }
 
-    public function getViewFile()
+    protected function getViewFile()
     {
         return LOCATION_DOMAIN.'/'.$this->_mainDir.'/'.$this->_fileName.'/'.$this->_view;
     }
 
-    public function setGames($gameName = 'sample')
+    protected function setGames($gameName = 'sample')
     {
         $this->_gameName = $gameName;
     }
 
+    protected function getGames()
+    {
+        return $this->_gameName;
+    }
+
     /*
      * テーマJSファイルをすべて読み込む（例外ファイルは別途設定）
+     * $jsDir String
+     * return String
      */
     public function getJsFile($jsDir)
     {

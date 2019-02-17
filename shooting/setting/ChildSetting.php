@@ -11,11 +11,27 @@ class ChildSetting extends BaseSetting {
     {
         parent::__construct();
         $this->setGameFile($this->_gameFile);
+        $this->setViewFile($this->_gameFile);
     }
 
     private function setGameFile($name)
     {
-        $this->setGames($name);
+        parent::setGames($name);
+    }
+
+    public function getGames()
+    {
+        return parent::getGames();
+    }
+
+    public function setViewFile($name)
+    {
+        parent::setViewFile($name);
+    }
+
+    public function getViewFile()
+    {
+        return parent::getViewFile();
     }
 }
 ?>
