@@ -17,7 +17,7 @@ class BaseSetting {
     public function __construct()
     {
         $this->_domain = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://').$_SERVER['HTTP_HOST'];
-        $this->_uri = $this->_domain.$_SERVER['SCRIPT_NAME'];
+        $this->_uri = basename($this->_domain.$_SERVER['SCRIPT_NAME']);
         $this->setDefineLocationSetting($this->_domain, $this->_uri);
     }
 
@@ -98,6 +98,8 @@ class BaseSetting {
 
     /*
      * 例外ファイルをキーで取得
+     * return array
+     * $name String
      */
     protected function getExceptionsFile($name = '')
     {
