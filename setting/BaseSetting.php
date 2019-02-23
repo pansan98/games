@@ -34,16 +34,15 @@ class BaseSetting {
             define('LOCATION_URI', $uri);
         }
 
-        define('LOCATION_DIR', dirname(__FILE__));
-
         $this->setFilePathSetting();
     }
 
     protected function setFilePathSetting()
     {
         if(!defined('LOCATION_JS_PATH')) {
-            define('LOCATION_JS_PATH', $this->_domain.'/'.$this->_mainDir.'/js/');
+            define('LOCATION_GLOBAL_JS_PATH', $this->_domain.'/'.$this->_mainDir.'/js/');
         }
+        define('LOCATION_LOCAL_JS_PATH', LOCATION_DOMAIN.'/'.$this->_mainDir.'/'.$this->_gameName.'/js/');
     }
 
     /*
@@ -79,24 +78,6 @@ class BaseSetting {
         return $this->_gameName;
     }
 
-    /*
-     * JSテーマファイルをすべて読み込む（例外ファイルは別途設定）
-     * $jsDir String
-     */
-    public function getJsFile($jsDir)
-    {
-        if(is_dir($jsDir)) {
-            // 除外ファイルが設定されていば処理終了
-            $exceptionFile = $this->checkExistsExceptionFile($jsDir);
-            if (count($exceptionFile) > 0) {
-                // TO DO 例外ファイルがあった時の処理
-                return false;
-            } else {
-                $this->getFiles($jsDir);
-            }
-        }
-    }
-
 
     /*
      * キーをフォルダ名にして例外を格納
@@ -130,43 +111,6 @@ class BaseSetting {
     protected function checkExistsExceptionFile($key)
     {
         return $this->_exceptionFile[$key];
-    }
-
-    /*
-     * ファイルをすべて取得
-     * $dir String
-     * $isGet int
-     * param $isGet 0=>出力 1=>取得する
-     */
-    protected function getFiles($dir, $isGet = 0)
-    {
-        if (is_dir($dir)) {
-            if ($openDir = opendir($dir)) {
-                foreach ($openDir as $file) {
-                    if (is_dir($file)) {
-                        $this->getFiles($dir . $file);
-                    } else {
-                        if(file_exists(LOCATION_JS_PATH.$file)) {
-                            if ($isGet === 0) {
-                                echo '<script type="text/javascript" src="' . LOCATION_JS_PATH . $file . '"></script>';
-                            } else {
-                                return $file;
-                            }
-                        }
-                    }
-                }
-                closedir($openDir);
-            }
-        } else {
-            // 初期がファイルだったら読み込み
-            if (is_file($dir)) {
-                if(file_exists(LOCATION_JS_PATH.$dir)) {
-                    if ($isGet === 0) {
-                        echo '<script type="text/javascript" src="'.LOCATION_JS_PATH.$dir.'"></script>';
-                    }
-                }
-            }
-        }
     }
 
     private function register()

@@ -77,11 +77,68 @@ class ChildSetting extends BaseSetting {
     {
         foreach ($this->_exceptionFile[$key] as $keyFile => $valFile) {
             if ($valFile == $name) {
-                if (file_exists(LOCATION_JS_PATH.$key.'/'.$valFile)) {
-                    echo '<script type="text/javascript" src="'.LOCATION_JS_PATH.$key.'/'.$valFile.'"></script>';
+                if (file_exists(LOCATION_LOCAL_JS_PATH.$key.'/'.$valFile)) {
+                    echo '<script type="text/javascript" src="'.LOCATION_LOCAL_JS_PATH.$key.'/'.$valFile.'"></script>';
                 }
             }
         }
     }
+
+    /*
+     * ファイルをすべて取得
+     * $dir String
+     * $isGet int
+     * param $isGet 0=>出力 1=>取得
+     */
+    public function getJsFiles($dir, $isGet = 0)
+    {
+        if (is_dir($dir)) {
+            if ($openDir = opendir($dir)) {
+                foreach ($openDir as $file) {
+                    if (is_dir($file)) {
+                        $this->getJsFiles($dir . $file);
+                    } else {
+                        if(file_exists($file)) {
+                            if ($isGet === 0) {
+                                echo '<script type="text/javascript" src="' . $file . '"></script>';
+                            } else {
+                                return $file;
+                            }
+                        }
+                    }
+                }
+                closedir($openDir);
+            }
+        } else {
+            // 初期がファイルだったら読み込み
+            if (is_file($dir)) {
+                if(file_exists($dir)) {
+                    if ($isGet === 0) {
+                        echo '<script type="text/javascript" src="'.$dir.'"></script>';
+                    } else {
+                        return $dir;
+                    }
+                }
+            }
+        }
+    }
+
+    /*
+     * JSテーマファイルをすべて読み込む（例外ファイルは別途設定）
+     * $jsDir String
+     */
+//    public function getJsFile($jsDir)
+//    {
+//        if(is_dir($jsDir)) {
+//            // 除外ファイルが設定されていば処理終了
+//            $exceptionFile = $this->checkExistsExceptionFile($jsDir);
+//            if (count($exceptionFile) > 0) {
+//                // TO DO 例外ファイルがあった時の処理
+//                return false;
+//            } else {
+//                $this->getFiles($jsDir);
+//            }
+//        }
+//    }
 }
 ?>
