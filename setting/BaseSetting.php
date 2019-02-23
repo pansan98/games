@@ -1,5 +1,4 @@
 <?php
-
 /*
  * 共通設定
  */
@@ -23,6 +22,7 @@ class BaseSetting {
         $this->_domain = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://').$_SERVER['HTTP_HOST'];
         $this->_uri = basename($this->_domain.$_SERVER['SCRIPT_NAME']);
         $this->setDefineLocationSetting($this->_domain, $this->_uri);
+        $this->register();
     }
 
     protected function setDefineLocationSetting($domain = "", $uri = "")
@@ -136,7 +136,7 @@ class BaseSetting {
      * ファイルをすべて取得
      * $dir String
      * $isGet int
-     * param 0=>出力 1=>取得する
+     * param $isGet 0=>出力 1=>取得する
      */
     protected function getFiles($dir, $isGet = 0)
     {
@@ -149,10 +149,13 @@ class BaseSetting {
                         if(file_exists(LOCATION_JS_PATH.$file)) {
                             if ($isGet === 0) {
                                 echo '<script type="text/javascript" src="' . LOCATION_JS_PATH . $file . '"></script>';
+                            } else {
+                                return $file;
                             }
                         }
                     }
                 }
+                closedir($openDir);
             }
         } else {
             // 初期がファイルだったら読み込み
@@ -161,6 +164,26 @@ class BaseSetting {
                     if ($isGet === 0) {
                         echo '<script type="text/javascript" src="'.LOCATION_JS_PATH.$dir.'"></script>';
                     }
+                }
+            }
+        }
+    }
+
+    private function register()
+    {
+        spl_autoload_register( array($this, 'autoLoadClass'));
+    }
+
+    /*
+     * 呼び出したclassを読み込む
+     */
+    private function autoLoadClass($class)
+    {
+        foreach ($this->_autoLoadDir as $dir) {
+            if (file_exists($dir . $class . '.php')) {
+                $file = $dir . $class . '.php';
+                if (is_readable($file)) {
+                    require_once $file;
                 }
             }
         }

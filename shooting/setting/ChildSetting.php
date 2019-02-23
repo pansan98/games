@@ -1,7 +1,10 @@
 <?php
+
 /*
  * 各ゲームの設定を個別に設定
  */
+
+require_once __DIR__ . '/../../setting/BaseSetting.php';
 
 class ChildSetting extends BaseSetting {
     // ゲームフォルダを指定
@@ -15,14 +18,21 @@ class ChildSetting extends BaseSetting {
         parent::__construct();
         $this->setGameFile($this->_gameFile);
         $this->setViewFile($this->_gameFile);
-        $this->iniSetting();
+
+        //オートロードの設定
+        $this->initAutoLoad(dirname(__FILE__) . 'src/Model/');
+        $this->initAutoLoad(dirname(__FILE__) . 'src/Controller/');
+
         //例外ファイルがあれば適用
-        //$this->setExceptionsFile('exception', 'sample.js');
+        $this->setExceptionsFile('exception', 'sample.js');
     }
 
-    private function iniSetting()
+    /*
+     * オートロード適用フォルダを指定
+     */
+    private function initAutoLoad($dir)
     {
-        $this->_autoLoadDir[] = 'model/';
+        $this->_autoLoadDir[] = $dir;
     }
 
     protected function createExceptionFiles($file)
@@ -60,7 +70,10 @@ class ChildSetting extends BaseSetting {
         parent::getExceptionsFiles($key, $name);
     }
 
-    public function outPutExceptionsFile($key, $name)
+    /*
+     * 例外ファイルの出力
+     */
+    public function outPutExceptionsJsFile($key, $name)
     {
         foreach ($this->_exceptionFile[$key] as $keyFile => $valFile) {
             if ($valFile == $name) {
