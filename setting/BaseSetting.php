@@ -33,6 +33,7 @@ class BaseSetting {
         if (!defined('LOCATION_URI')) {
             define('LOCATION_URI', $uri);
         }
+        define('LOCATION_GLOBAL_MAIN_DIR', LOCATION_DOMAIN . '/' . $this->_mainDir . '/');
 
         $this->setFilePathSetting();
     }
@@ -59,7 +60,7 @@ class BaseSetting {
      */
     protected function getViewFile()
     {
-        return LOCATION_DOMAIN.'/'.$this->_mainDir.'/'.$this->_gameName.'/'.$this->_view;
+        return LOCATION_DOMAIN.'/'.$this->_mainDir.'/'.$this->_gameName.'/src/View/';
     }
 
     /*
@@ -116,7 +117,7 @@ class BaseSetting {
 
     private function register()
     {
-        spl_autoload_register( array($this, 'autoLoadClass'));
+        spl_autoload_register([$this, 'autoLoadClass']);
     }
 
     /*

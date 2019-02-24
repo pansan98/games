@@ -16,7 +16,7 @@ class ChildSetting extends BaseSetting {
     public function __construct()
     {
         parent::__construct();
-        $this->setGameFile($this->_gameFile);
+        $this->setGames($this->_gameFile);
         $this->setViewFile($this->_gameFile);
 
         //オートロードの設定
@@ -40,7 +40,7 @@ class ChildSetting extends BaseSetting {
         $this->_exFile[] = $file;
     }
 
-    private function setGameFile($name)
+    protected function setGames($name = 'sample')
     {
         parent::setGames($name);
     }
@@ -50,7 +50,7 @@ class ChildSetting extends BaseSetting {
         return $this->getGames();
     }
 
-    public function setViewFile($name)
+    protected function setViewFile($name)
     {
         parent::setViewFile($name);
     }
