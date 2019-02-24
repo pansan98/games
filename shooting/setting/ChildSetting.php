@@ -123,6 +123,20 @@ class ChildSetting extends BaseSetting {
         }
     }
 
+    public function getEnvironmentDevelop()
+    {
+        switch($_SERVER['HTTP_HOST']) {
+            case 'localhost':
+            case '127.0.0.1':
+                return true;
+                break;
+
+            default:
+                return false;
+                break;
+        }
+    }
+
     /*
      * JSテーマファイルをすべて読み込む（例外ファイルは別途設定）
      * $jsDir String
