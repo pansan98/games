@@ -33,17 +33,21 @@ class BaseSetting {
         if (!defined('LOCATION_URI')) {
             define('LOCATION_URI', $uri);
         }
-        define('LOCATION_GLOBAL_MAIN_DIR', LOCATION_DOMAIN . '/' . $this->_mainDir . '/');
+        if (!defined('LOCATION_GLOBAL_MAIN_DIR')) {
+            define('LOCATION_GLOBAL_MAIN_DIR', LOCATION_DOMAIN . '/' . $this->_mainDir . '/');
+        }
 
         $this->setFilePathSetting();
     }
 
     protected function setFilePathSetting()
     {
-        if(!defined('LOCATION_JS_PATH')) {
+        if(!defined('LOCATION_GLOBAL_JS_PATH')) {
             define('LOCATION_GLOBAL_JS_PATH', $this->_domain.'/'.$this->_mainDir.'/js/');
         }
-        define('LOCATION_LOCAL_JS_PATH', LOCATION_DOMAIN.'/'.$this->_mainDir.'/'.$this->_gameName.'/js/');
+        if (!defined('LOCATION_LOCAL_JS_PATH')) {
+            define('LOCATION_LOCAL_JS_PATH', LOCATION_DOMAIN.'/'.$this->_mainDir.'/'.$this->_gameName.'/js/');
+        }
     }
 
     /*
@@ -51,7 +55,7 @@ class BaseSetting {
      */
     protected function setViewFile($view)
     {
-        $view = preg_replace(' ', '', $view);
+        //$view = preg_replace(' ', '', $view);
         $this->_view = $view;
     }
 
@@ -60,7 +64,7 @@ class BaseSetting {
      */
     protected function getViewFile()
     {
-        return LOCATION_DOMAIN.'/'.$this->_mainDir.'/'.$this->_gameName.'/src/View/';
+        return LOCATION_GLOBAL_MAIN_DIR . $this->_gameName.'/src/View/';
     }
 
     /*

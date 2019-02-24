@@ -16,12 +16,12 @@ class ChildSetting extends BaseSetting {
     public function __construct()
     {
         parent::__construct();
+        //オートロードの設定
+        $this->initAutoLoad(dirname(__FILE__) . '/../src/Model/');
+        $this->initAutoLoad(dirname(__FILE__) . '/../src/Controller/');
+
         $this->setGames($this->_gameFile);
         $this->setViewFile($this->_gameFile);
-
-        //オートロードの設定
-        $this->initAutoLoad(dirname(__FILE__) . 'src/Model/');
-        $this->initAutoLoad(dirname(__FILE__) . 'src/Controller/');
 
         //例外ファイルがあれば適用
         $this->setExceptionsFile('exception', 'sample.js');
