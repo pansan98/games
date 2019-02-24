@@ -8,20 +8,21 @@ require_once __DIR__ . '/../../setting/BaseSetting.php';
 
 class ChildSetting extends BaseSetting {
     // ゲームフォルダを指定
-    protected $_gameFile = 'shooting';
+    protected $_gameDir = 'shooting';
 
     //例外ファイルの設定
     protected $_exFile = [];
 
     public function __construct()
     {
+        $this->setGames($this->_gameDir);
+        $this->setViewFile($this->_gameDir);
+
         parent::__construct();
+
         //オートロードの設定
         $this->initAutoLoad(dirname(__FILE__) . '/../src/Model/');
         $this->initAutoLoad(dirname(__FILE__) . '/../src/Controller/');
-
-        $this->setGames($this->_gameFile);
-        $this->setViewFile($this->_gameFile);
 
         //例外ファイルがあれば適用
         $this->setExceptionsFile('exception', 'sample.js');
@@ -47,7 +48,7 @@ class ChildSetting extends BaseSetting {
 
     public function getGames()
     {
-        return $this->getGames();
+        parent::getGames();
     }
 
     protected function setViewFile($name)
@@ -85,39 +86,28 @@ class ChildSetting extends BaseSetting {
     }
 
     /*
-     * ファイルをすべて取得
+     * JSファイルをすべて取得
      * $dir String
-     * $isGet int
-     * param $isGet 0=>出力 1=>取得
      */
-    public function getJsFiles($dir, $isGet = 0)
+    public function getJsFiles($dir)
     {
+        clearstatcache();
         if (is_dir($dir)) {
-            if ($openDir = opendir($dir)) {
-                foreach ($openDir as $file) {
-                    if (is_dir($file)) {
-                        $this->getJsFiles($dir . $file);
-                    } else {
-                        if(file_exists($file)) {
-                            if ($isGet === 0) {
-                                echo '<script type="text/javascript" src="' . $file . '"></script>';
-                            } else {
-                                return $file;
-                            }
-                        }
+            foreach (glob($dir.'*') as $file) {
+                if (is_dir($file)) {
+                    $this->getJsFiles($file . '/');
+                } else {
+                    if(file_exists($file)) {
+                        $file = $this->getSpliceStringFile($file);
+                        echo '<script type="text/javascript" src="'. LOCATION_LOCAL_JS_PATH . $file . '" style="display:block;"></script>';
                     }
                 }
-                closedir($openDir);
             }
         } else {
             // 初期がファイルだったら読み込み
             if (is_file($dir)) {
                 if(file_exists($dir)) {
-                    if ($isGet === 0) {
-                        echo '<script type="text/javascript" src="'.$dir.'"></script>';
-                    } else {
-                        return $dir;
-                    }
+                    echo '<script type="text/javascript" src="'.$dir.'"></script>';
                 }
             }
         }
@@ -138,21 +128,17 @@ class ChildSetting extends BaseSetting {
     }
 
     /*
-     * JSテーマファイルをすべて読み込む（例外ファイルは別途設定）
-     * $jsDir String
+     * ファイル部分だけ取得する
+     * $str ファイルパス
      */
-//    public function getJsFile($jsDir)
-//    {
-//        if(is_dir($jsDir)) {
-//            // 除外ファイルが設定されていば処理終了
-//            $exceptionFile = $this->checkExistsExceptionFile($jsDir);
-//            if (count($exceptionFile) > 0) {
-//                // TO DO 例外ファイルがあった時の処理
-//                return false;
-//            } else {
-//                $this->getFiles($jsDir);
-//            }
-//        }
-//    }
+    public function getSpliceStringFile($filePath)
+    {
+        $allStr = mb_strlen($filePath, 'utf-8');
+        $fileStr = strrpos($filePath, '/', 0);
+        $spliceStr = $allStr - $fileStr;
+        // [/]分の1文字を引く
+        $file = substr($filePath, -($spliceStr - 1));
+        return $file;
+    }
 }
 ?>

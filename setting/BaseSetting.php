@@ -33,6 +33,9 @@ class BaseSetting {
         if (!defined('LOCATION_URI')) {
             define('LOCATION_URI', $uri);
         }
+        if(!defined('LOCATION_GLOBAL_DIR')) {
+            define('LOCATION_GLOBAL_DIR', __DIR__ . '/../');
+        }
         if (!defined('LOCATION_GLOBAL_MAIN_DIR')) {
             define('LOCATION_GLOBAL_MAIN_DIR', LOCATION_DOMAIN . '/' . $this->_mainDir . '/');
         }
@@ -45,8 +48,14 @@ class BaseSetting {
         if(!defined('LOCATION_GLOBAL_JS_PATH')) {
             define('LOCATION_GLOBAL_JS_PATH', $this->_domain.'/'.$this->_mainDir.'/js/');
         }
+        if (!defined('LOCATION_GLOBAL_JS_DIR')) {
+            define('LOCATION_GLOBAL_JS_DIR', LOCATION_GLOBAL_DIR . '/js/');
+        }
         if (!defined('LOCATION_LOCAL_JS_PATH')) {
             define('LOCATION_LOCAL_JS_PATH', LOCATION_DOMAIN.'/'.$this->_mainDir.'/'.$this->_gameName.'/js/');
+        }
+        if(!defined('LOCATION_LOCAL_JS_DIR')) {
+            define('LOCATION_LOCAL_JS_DIR', LOCATION_GLOBAL_DIR.$this->_gameName.'/js/');
         }
     }
 
@@ -135,6 +144,47 @@ class BaseSetting {
                 if (is_readable($file)) {
                     require_once $file;
                 }
+            } else {
+                $dir = $this->getFiles($dir, 0);
+                if (file_exists($dir . $class . '.php')) {
+                    $file = $dir . $class . '.php';
+                    if (is_readable($file)) {
+                        require_once $file;
+                    }
+                }
+            }
+        }
+    }
+
+    /*
+     * ファイルの取得
+     * $dir String
+     * @param 0 => 取得
+     * TODO フォルダの中身をすべてループさせる
+     */
+    protected function getFiles($dir, $isGet = 0)
+    {
+        if(is_dir($dir)) {
+            if($openDir = opendir($dir)) {
+                $isCheck = @file_get_contents($openDir);
+                if ($isCheck) {
+                    foreach ($openDir as $file) {
+                        if (is_dir($file)) {
+                            $this->getFiles($dir . $file, $isGet);
+                        } else {
+                            if(file_exists($dir . $file)) {
+                                if ($isGet === 0) {
+                                    return $dir;
+                                } else {
+                                    echo $dir.$file;
+                                }
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                closedir($openDir);
             }
         }
     }
