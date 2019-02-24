@@ -113,6 +113,7 @@ class BaseSetting {
         return $this->_exceptionFile[$key];
     }
 
+
     private function register()
     {
         spl_autoload_register( array($this, 'autoLoadClass'));
