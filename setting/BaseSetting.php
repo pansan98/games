@@ -188,6 +188,20 @@ class BaseSetting {
             }
         }
     }
+    
+    public function getEnvironmentDevelop()
+    {
+        switch($_SERVER['HTTP_HOST']) {
+            case 'localhost':
+            case '127.0.0.1':
+                return true;
+                break;
+            
+            default:
+                return false;
+                break;
+        }
+    }
 
 }
 ?>

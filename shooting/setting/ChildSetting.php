@@ -113,20 +113,6 @@ class ChildSetting extends BaseSetting {
         }
     }
 
-    public function getEnvironmentDevelop()
-    {
-        switch($_SERVER['HTTP_HOST']) {
-            case 'localhost':
-            case '127.0.0.1':
-                return true;
-                break;
-
-            default:
-                return false;
-                break;
-        }
-    }
-
     /*
      * ファイル部分だけ取得する
      * $str ファイルパス
@@ -139,6 +125,12 @@ class ChildSetting extends BaseSetting {
         // [/]分の1文字を引く
         $file = substr($filePath, -($spliceStr - 1));
         return $file;
+    }
+    
+    
+    public function getChildSetting()
+    {
+        return $this;
     }
 }
 ?>
