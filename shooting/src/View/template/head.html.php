@@ -7,6 +7,6 @@
     <!-- *** javascript *** -->
     <script src="<?php echo LOCATION_GLOBAL_JS_PATH; ?>jquery-1.7.2.min.js"></script>
     <?php
-    $childSetting->getJsFiles(LOCATION_LOCAL_JS_DIR);
+        $childSetting->getJsFiles(LOCATION_LOCAL_JS_DIR);
     ?>
 </head>
