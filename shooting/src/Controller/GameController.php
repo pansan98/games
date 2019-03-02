@@ -30,7 +30,7 @@ class GameController {
 
     public function getRedirectUrl()
     {
-        return LOCATION_GLOBAL_MAIN_DIR . $this->_settingObj->getGames() . '/';
+        return LOCATION_GLOBAL_MAIN_PATH . $this->_settingObj->getGames() . '/';
     }
 }
 ?>

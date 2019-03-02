@@ -36,8 +36,8 @@ class BaseSetting {
         if(!defined('LOCATION_GLOBAL_DIR')) {
             define('LOCATION_GLOBAL_DIR', __DIR__ . '/../');
         }
-        if (!defined('LOCATION_GLOBAL_MAIN_DIR')) {
-            define('LOCATION_GLOBAL_MAIN_DIR', LOCATION_DOMAIN . '/' . $this->_mainDir . '/');
+        if (!defined('LOCATION_GLOBAL_MAIN_PATH')) {
+            define('LOCATION_GLOBAL_MAIN_PATH', LOCATION_DOMAIN . '/' . $this->_mainDir . '/');
         }
 
         $this->setFilePathSetting();
@@ -73,7 +73,7 @@ class BaseSetting {
      */
     protected function getViewFile()
     {
-        return LOCATION_GLOBAL_MAIN_DIR . $this->_gameName.'/src/View/';
+        return LOCATION_GLOBAL_MAIN_PATH . $this->_gameName.'/src/View/';
     }
 
     /*
