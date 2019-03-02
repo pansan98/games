@@ -39,6 +39,9 @@ class BaseSetting {
         if (!defined('LOCATION_GLOBAL_MAIN_PATH')) {
             define('LOCATION_GLOBAL_MAIN_PATH', LOCATION_DOMAIN . '/' . $this->_mainDir . '/');
         }
+        if(!defined('LOCATION_GLOBAL_MAIN_DIR')) {
+            define('LOCATION_GLOBAL_MAIN_DIR', LOCATION_GLOBAL_DIR.'/');
+        }
 
         $this->setFilePathSetting();
     }
@@ -73,7 +76,7 @@ class BaseSetting {
      */
     protected function getViewFile()
     {
-        return LOCATION_GLOBAL_MAIN_PATH . $this->_gameName.'/src/View/';
+        return LOCATION_GLOBAL_MAIN_DIR . $this->_gameName.'/src/View/';
     }
 
     /*
@@ -160,31 +163,21 @@ class BaseSetting {
      * ファイルの取得
      * $dir String
      * @param 0 => 取得
-     * TODO フォルダの中身をすべてループさせる
      */
     protected function getFiles($dir, $isGet = 0)
     {
-        if(is_dir($dir)) {
-            if($openDir = opendir($dir)) {
-                $isCheck = @file_get_contents($openDir);
-                if ($isCheck) {
-                    foreach ($openDir as $file) {
-                        if (is_dir($file)) {
-                            $this->getFiles($dir . $file, $isGet);
-                        } else {
-                            if(file_exists($dir . $file)) {
-                                if ($isGet === 0) {
-                                    return $dir;
-                                } else {
-                                    echo $dir.$file;
-                                }
-                            } else {
-                                return false;
-                            }
+        if (is_dir($dir)) {
+            foreach (glob($dir.'*') as $file) {
+                if (is_dir($file)) {
+                    $this->getFiles($file . '/', $isGet);
+                } else {
+                    if(file_exists($file)) {
+                        if ($isGet === 0) {
+                            $file = $this->getSpliceStringFile($file);
+                            return $file;
                         }
                     }
                 }
-                closedir($openDir);
             }
         }
     }
@@ -201,6 +194,20 @@ class BaseSetting {
                 return false;
                 break;
         }
+    }
+
+    /*
+     * ファイル部分だけ取得する
+     * $str ファイルパス
+     */
+    protected function getSpliceStringFile($filePath)
+    {
+        $allStr = mb_strlen($filePath, 'utf-8');
+        $fileStr = strrpos($filePath, '/', 0);
+        $spliceStr = $allStr - $fileStr;
+        // [/]分の1文字を引く
+        $file = substr($filePath, -($spliceStr - 1));
+        return $file;
     }
 
 }

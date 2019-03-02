@@ -48,7 +48,7 @@ class ChildSetting extends BaseSetting {
 
     public function getGames()
     {
-        parent::getGames();
+        return parent::getGames();
     }
 
     protected function setViewFile($name)
@@ -68,7 +68,7 @@ class ChildSetting extends BaseSetting {
     }
 
     public function getExceptionsFiles($key = 'sample', $name = 'sample.js') {
-        parent::getExceptionsFiles($key, $name);
+        return parent::getExceptionsFiles($key, $name);
     }
 
     /*
@@ -119,12 +119,7 @@ class ChildSetting extends BaseSetting {
      */
     public function getSpliceStringFile($filePath)
     {
-        $allStr = mb_strlen($filePath, 'utf-8');
-        $fileStr = strrpos($filePath, '/', 0);
-        $spliceStr = $allStr - $fileStr;
-        // [/]分の1文字を引く
-        $file = substr($filePath, -($spliceStr - 1));
-        return $file;
+        return parent::getSpliceStringFile($filePath);
     }
     
     
