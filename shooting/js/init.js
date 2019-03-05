@@ -27,10 +27,15 @@ var initScreenGames = {
             });
             this.styleFlg = true;
         }
+        this.executeProcessMove('left', initObj.playerObj.setPositionX);
+        this.executeProcessMove('top', initObj.playerObj.setPositionY);
+    },
+    executeProcessMove: function(position, value) {
+        $(initObj.playerObj.airCraft).css(position, value);
     }
 }
 
 // console出力用
-function getConsoleLog(log) {
+function getConsole(log) {
     console.log(log);
 }

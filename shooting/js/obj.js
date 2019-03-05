@@ -8,7 +8,7 @@ var initObj = {
     gameTimeTimer: 5000,
     enemyObj : {
         // 初期位置
-        setPositionX : 50+'%',
+        setPositionX : 50,
         setPositionY : 0,
         // 初期の敵数
         setAppearCount: 3,
@@ -18,11 +18,14 @@ var initObj = {
         setTimer: 0,
         // レベル変化時間
         setPassHours: 30,
+        enemyElements : document.getElementsByClassName('emeny-space')
     },
     playerObj : {
         setCurrentPoint: 3,
-        setPositionX : 50+'%',
-        setPositionY : 0,
+        setPositionX : 20,
+        setPositionY : 20,
+        playerElements : document.getElementsByClassName('player-space'),
+        airCraft : document.getElementsByClassName('aircraft')
     },
     keyCodeObj : {
         37: 'ArrowLeft',
@@ -51,7 +54,17 @@ var gamesObj = {
     },
     getKeyCode : function(event) {
         event.key = initObj.keyCodeObj[event.keyCode];
-        return event;
+        switch(event.key) {
+            case 'ArrowLeft':
+            case 'ArrowRight':
+            case 'ArrowUp':
+            case 'ArrowDown':
+                return true;
+                break;
+            default:
+                return false;
+                break;
+        }
     }
 }
 

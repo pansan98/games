@@ -7,30 +7,37 @@ function getGame() {
         function action() {
             function playerAction() {
                 //document.onkeydown = getEventOperation();
-                window.addEventListener('keydown', getEventOperation);
+                document.addEventListener('keydown', getEventOperation);
             }
 
             function getEventOperation(e) {
                 switch(e.key) {
                     case "ArrowLeft":
-                        getConsoleLog('←')
+                        playerObj.setPositionX = playerObj.setPositionX - 10;
+                        initScreenGames.executeProcessMove('left', playerObj.setPositionX);
                         //setLeftPosition(e);
                         break;
                     case "ArrowRight":
-                        getConsoleLog('→')
+                        playerObj.setPositionX = playerObj.setPositionX + 10;
+                        initScreenGames.executeProcessMove('left', playerObj.setPositionX);
                         //setRightPosition(e);
                         break;
-                    case "ArrowUP":
-                        getConsoleLog('↑');
+                    case "ArrowUp":
+                        playerObj.setPositionY = playerObj.setPositionY - 10;
+                        initScreenGames.executeProcessMove('top', playerObj.setPositionY);
                         //setUpPosition(e);
                         break;
                     case "ArrowDown":
-                        getConsoleLog('↓')
-                        //setDownPosition(e);
+                        playerObj.setPositionY = playerObj.setPositionY + 10;
+                        initScreenGames.executeProcessMove('top', playerObj.setPositionY);
+                        //setDownPosition(e);//
                         break;
                     default:
-                        getConsoleLog('キーなし');
-                        //getEventOperation(gamesObj.getKeyCode(e));
+                        //キーなし
+                        // if(gamesObj.getKeyCode(e)) {
+                        //     getEventOperation(gamesObj.getKeyCode(e));
+                        //     initObj.keyCodeObj[e.keyCode]
+                        // }
                         break;
                 }
             }
@@ -45,8 +52,8 @@ function getGame() {
             }
         
             initObj.gameTimer = setTimeout(function() {
-                getConsoleLog('ゲームが始まってるよ');
-                getConsoleLog('このログは'+(initObj.gameTimeTimer / 1000)+'秒毎おきに出る');
+                getConsole('ゲームが始まってるよ');
+                getConsole('このログは'+(initObj.gameTimeTimer / 1000)+'秒毎おきに出る');
                 timeElapsedLogic();
             }, initObj.gameTimeTimer);
         }
@@ -58,14 +65,16 @@ function getGame() {
     actionGame();
 }
 
+// ゲーム終了時
 function endGames() {
     clearTimeout(initObj.gameTimer);
     $(initObj.startButton).show();
     $(initObj.endButton).hide();
     initScreenGames.gameDisplayScreen(false);
-    getConsoleLog('ゲームが終了されました。');
+    getConsole('ゲームが終了されました。');
 }
 
+// ゲーム開始時
 function startGames() {
     $(initObj.startButton).hide();
     $(initObj.endButton).show();
