@@ -68,17 +68,17 @@ function getGame() {
 // ゲーム終了時
 function endGames() {
     clearTimeout(initObj.gameTimer);
-    $(initObj.startButton).show();
-    $(initObj.endButton).hide();
-    initScreenGames.gameDisplayScreen(false);
+    initScreenGames.gameDisplayScreen(initObj.startButton, true);
+    initScreenGames.gameDisplayScreen(initObj.endButton, false);
+    initScreenGames.gameDisplayScreen(initObj.gameScreen, false);
     getConsole('ゲームが終了されました。');
 }
 
 // ゲーム開始時
 function startGames() {
-    $(initObj.startButton).hide();
-    $(initObj.endButton).show();
-    initScreenGames.gameDisplayScreen(true);
+    initScreenGames.gameDisplayScreen(initObj.startButton, false);
+    initScreenGames.gameDisplayScreen(initObj.endButton, true);
+    initScreenGames.gameDisplayScreen(initObj.gameScreen, true);
     initScreenGames.setScreenStyle();
     getGame();
 }

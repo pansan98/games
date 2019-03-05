@@ -21,18 +21,23 @@ var initObj = {
         enemyElements : document.getElementsByClassName('emeny-space')
     },
     playerObj : {
+        // 初期体力
         setCurrentPoint: 3,
+        // 初期位置
         setPositionX : 20,
         setPositionY : 20,
         playerElements : document.getElementsByClassName('player-space'),
+        // 機体
         airCraft : document.getElementsByClassName('aircraft')
     },
+    // キーコードobj
     keyCodeObj : {
         37: 'ArrowLeft',
         39: 'ArrowRight',
         38: 'ArrowUp',
         40: 'ArrowDown'
     },
+    // 画面用処理
     initGames: function() {
         initScreenGames.screenGames();
     }
@@ -40,6 +45,7 @@ var initObj = {
 
 // ゲームオブジェクト
 var gamesObj = {
+    // ゲームに関する処理設定はここに書く
     startGames: function() {
         startGames();
     },
@@ -69,6 +75,7 @@ var gamesObj = {
 }
 
 window.onload = function() {
+    // スタート準備
     initObj.initGames();
 }
 //console.log(initGames.gamesObj.currentPoint);

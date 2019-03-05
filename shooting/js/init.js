@@ -10,11 +10,11 @@ var initScreenGames = {
     
         setStartGames();
     },
-    gameDisplayScreen: function(status) {
+    gameDisplayScreen: function(elem, status) {
         if (status) {
-            $(initObj.gameScreen).show();
+            $(elem).show();
         } else {
-            $(initObj.gameScreen).hide();
+            $(elem).hide();
         }
     },
     setScreenStyle: function() {
