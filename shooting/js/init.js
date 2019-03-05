@@ -1,3 +1,5 @@
+'use strict';
+
 // 表示画面用の処理
 var initScreenGames = {
     styleFlg:false,
@@ -30,8 +32,8 @@ var initScreenGames = {
         // this.executeProcessMove('left', initObj.playerObj.setPositionX);
         // this.executeProcessMove('top', initObj.playerObj.setPositionY);
     },
-    executeProcessMove: function(position, value) {
-        $(initObj.playerObj.airCraft).css(position, value);
+    setElemStyle: function(elem, position, value) {
+        $(elem).css(position, value);
     }
 }
 

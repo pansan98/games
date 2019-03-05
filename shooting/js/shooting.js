@@ -10,48 +10,36 @@ function getGame() {
                 document.addEventListener('keydown', getEventOperation);
             }
 
-            function getEventOperation(e) {
+            getEventOperation = (e) => {
                 switch(e.key) {
                     case "ArrowLeft":
-                        playerObj.setPositionX -= 10;
-                        playerObj.airCraft[0].style.left = `${playerObj.setPositionX}px`;
-                        // playerObj.setPositionX = playerObj.setPositionX - 10;
-                        // initScreenGames.executeProcessMove('left', playerObj.setPositionX);
-                        //setLeftPosition(e);
+                        playerObj.positionX -= 10;
+                        playerObj.airCraft[0].style.left = `${playerObj.positionX}px`;
                         break;
                     case "ArrowRight":
-                        playerObj.setPositionX += 10;
-                        playerObj.airCraft[0].style.left = `${playerObj.setPositionX}px`;
-                        // playerObj.setPositionX = playerObj.setPositionX + 10;
-                        // initScreenGames.executeProcessMove('left', playerObj.setPositionX);
-                        //setRightPosition(e);
+                        playerObj.positionX += 10;
+                        playerObj.airCraft[0].style.left = `${playerObj.positionX}px`;
                         break;
                     case "ArrowUp":
-                        playerObj.setPositionY -= 10;
-                        playerObj.airCraft[0].style.top = `${playerObj.setPositionY}px`;
-                        // playerObj.setPositionY = playerObj.setPositionY - 10;
-                        // initScreenGames.executeProcessMove('top', playerObj.setPositionY);
-                        //setUpPosition(e);
+                        playerObj.positionY -= 10;
+                        playerObj.airCraft[0].style.top = `${playerObj.positionY}px`;
                         break;
                     case "ArrowDown":
-                        playerObj.setPositionY += 10;
-                        playerObj.airCraft[0].style.top = `${playerObj.setPositionY}px`;
-                        // playerObj.setPositionY = playerObj.setPositionY + 10;
-                        // initScreenGames.executeProcessMove('top', playerObj.setPositionY);
-                        //setDownPosition(e);//
+                        playerObj.positionY += 10;
+                        playerObj.airCraft[0].style.top = `${playerObj.positionY}px`;
                         break;
                     default:
                         //キーなし
-                        // if(gamesObj.getKeyCode(e)) {
-                        //     getEventOperation(gamesObj.getKeyCode(e));
-                        //     initObj.keyCodeObj[e.keyCode]
-                        // }
+                        if(gamesObj.getKeyCode(e)) {
+                            getEventOperation(gamesObj.getKeyCode(e));
+                        }
                         break;
                 }
                 window.requestAnimationFrame(getEventOperation);
-            }
-            window.requestAnimationFrame(getEventOperation);
 
+            }
+
+            window.requestAnimationFrame(getEventOperation);
             playerAction();
         }
 
