@@ -27,8 +27,8 @@ var initScreenGames = {
             });
             this.styleFlg = true;
         }
-        this.executeProcessMove('left', initObj.playerObj.setPositionX);
-        this.executeProcessMove('top', initObj.playerObj.setPositionY);
+        // this.executeProcessMove('left', initObj.playerObj.setPositionX);
+        // this.executeProcessMove('top', initObj.playerObj.setPositionY);
     },
     executeProcessMove: function(position, value) {
         $(initObj.playerObj.airCraft).css(position, value);

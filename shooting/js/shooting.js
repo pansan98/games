@@ -13,23 +13,31 @@ function getGame() {
             function getEventOperation(e) {
                 switch(e.key) {
                     case "ArrowLeft":
-                        playerObj.setPositionX = playerObj.setPositionX - 10;
-                        initScreenGames.executeProcessMove('left', playerObj.setPositionX);
+                        playerObj.setPositionX -= 10;
+                        playerObj.airCraft[0].style.left = `${playerObj.setPositionX}px`;
+                        // playerObj.setPositionX = playerObj.setPositionX - 10;
+                        // initScreenGames.executeProcessMove('left', playerObj.setPositionX);
                         //setLeftPosition(e);
                         break;
                     case "ArrowRight":
-                        playerObj.setPositionX = playerObj.setPositionX + 10;
-                        initScreenGames.executeProcessMove('left', playerObj.setPositionX);
+                        playerObj.setPositionX += 10;
+                        playerObj.airCraft[0].style.left = `${playerObj.setPositionX}px`;
+                        // playerObj.setPositionX = playerObj.setPositionX + 10;
+                        // initScreenGames.executeProcessMove('left', playerObj.setPositionX);
                         //setRightPosition(e);
                         break;
                     case "ArrowUp":
-                        playerObj.setPositionY = playerObj.setPositionY - 10;
-                        initScreenGames.executeProcessMove('top', playerObj.setPositionY);
+                        playerObj.setPositionY -= 10;
+                        playerObj.airCraft[0].style.top = `${playerObj.setPositionY}px`;
+                        // playerObj.setPositionY = playerObj.setPositionY - 10;
+                        // initScreenGames.executeProcessMove('top', playerObj.setPositionY);
                         //setUpPosition(e);
                         break;
                     case "ArrowDown":
-                        playerObj.setPositionY = playerObj.setPositionY + 10;
-                        initScreenGames.executeProcessMove('top', playerObj.setPositionY);
+                        playerObj.setPositionY += 10;
+                        playerObj.airCraft[0].style.top = `${playerObj.setPositionY}px`;
+                        // playerObj.setPositionY = playerObj.setPositionY + 10;
+                        // initScreenGames.executeProcessMove('top', playerObj.setPositionY);
                         //setDownPosition(e);//
                         break;
                     default:
@@ -40,7 +48,9 @@ function getGame() {
                         // }
                         break;
                 }
+                window.requestAnimationFrame(getEventOperation);
             }
+            window.requestAnimationFrame(getEventOperation);
 
             playerAction();
         }

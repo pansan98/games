@@ -28,7 +28,7 @@ var initObj = {
         setPositionY : 20,
         playerElements : document.getElementsByClassName('player-space'),
         // 機体
-        airCraft : document.getElementsByClassName('aircraft')
+        airCraft : document.querySelector('.aircraft')
     },
     // キーコードobj
     keyCodeObj : {
