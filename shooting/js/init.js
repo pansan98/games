@@ -1,25 +1,21 @@
 'use strict';
 
-var initGames = function() {
+// 表示画面用の処理
+var initScreenGames = function() {
 
-    function startGames() {
-        startAction();
+    var gameScreen = initObj.gameScreen;
+
+
+    function setStartGames() {
+        $(gameScreen).hide();
+        $(initObj.endButton).hide();
     }
 
-    function startAction() {
-        console.log(gamesObj);
-    }
-    startGames();
+
+    setStartGames();
 }
 
-var gamesObj = {
-    currentPoint: 0,
-    positionX:0,
-    positionY:0,
-    startGames: function() {
-        initGames();
-    }
+// console出力用
+function getConsoleLog(log) {
+    console.log(log);
 }
-
-gamesObj.startGames();
-//console.log(initGames.gamesObj.currentPoint);

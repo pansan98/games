@@ -8,7 +8,7 @@
 ?>
 <body>
 <?php
-    include $gameController->getFrontView('sample.html.php');
+    include $gameController->getFrontView('index.html.php');
 ?>
 </body>
 </html>
