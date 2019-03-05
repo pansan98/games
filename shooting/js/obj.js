@@ -8,8 +8,8 @@ var initObj = {
     gameTimeTimer: 5000,
     enemyObj : {
         // 初期位置
-        setPositionLeft : 50+'%',
-        setPositionTop : 0,
+        setPositionX : 50+'%',
+        setPositionY : 0,
         // 初期の敵数
         setAppearCount: 3,
         // 初期レベル
@@ -21,11 +21,17 @@ var initObj = {
     },
     playerObj : {
         setCurrentPoint: 3,
-        setPositionLeft : 50+'%',
-        setPositionTop : -1,
+        setPositionX : 50+'%',
+        setPositionY : 0,
+    },
+    keyCodeObj : {
+        37: 'ArrowLeft',
+        39: 'ArrowRight',
+        38: 'ArrowUp',
+        40: 'ArrowDown'
     },
     initGames: function() {
-        initScreenGames();
+        initScreenGames.screenGames();
     }
 }
 
@@ -38,10 +44,14 @@ var gamesObj = {
         endGames();
     },
     getEnemyObj : function () {
-        return changeEnemyObj;
+        return initObj.enemyObj;
     },
     getPlayerObj : function() {
-        return changePlayerObj;
+        return initObj.playerObj;
+    },
+    getKeyCode : function(event) {
+        event.key = initObj.keyCodeObj[event.keyCode];
+        return event;
     }
 }
 
