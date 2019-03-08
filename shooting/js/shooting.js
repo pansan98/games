@@ -6,12 +6,20 @@ function getGame() {
         // ゲームアクションはここに書く
         function action() {
             function playerAction() {
-                //document.onkeydown = getEventOperation();
-                document.addEventListener('keydown', getEventOperation);
+                // キー押下時
+                document.addEventListener('keydown', event => {
+                    playerObj.keyEvent = event.key;
+                });
+
+                // キー外した時
+                document.addEventListener('keyup', () => {
+                    playerObj.keyEvent = false;
+                });
             }
 
-            getEventOperation = (e) => {
-                switch(e.key) {
+            // イベントリスナー
+            getEventOperation = () => {
+                switch(playerObj.keyEvent) {
                     case "ArrowLeft":
                         playerObj.positionX -= 10;
                         playerObj.airCraft[0].style.left = `${playerObj.positionX}px`;
@@ -30,15 +38,17 @@ function getGame() {
                         break;
                     default:
                         //キーなし
-                        if(gamesObj.getKeyCode(e)) {
-                            getEventOperation(gamesObj.getKeyCode(e));
-                        }
+                        // if(gamesObj.getKeyCode(playerObj.keyEvent)) {
+                        //     getEventOperation(gamesObj.getKeyCode(e));
+                        // }
                         break;
                 }
+                // キューの追加
                 window.requestAnimationFrame(getEventOperation);
 
             }
 
+            // キューの追加
             window.requestAnimationFrame(getEventOperation);
             playerAction();
         }

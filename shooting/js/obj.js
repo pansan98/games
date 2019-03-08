@@ -26,6 +26,7 @@ var initObj = {
         // 初期位置
         positionX : 20,
         positionY : 20,
+        keyEvent : false,
         playerElements : document.getElementsByClassName('player-space'),
         // 機体
         airCraft : document.getElementsByClassName('aircraft')
