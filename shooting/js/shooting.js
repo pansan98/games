@@ -1,14 +1,16 @@
 function getGame() {
-    let enemyObj = gamesObj.getEnemyObj();
-    let playerObj = gamesObj.getPlayerObj();
+    let enemyObj = new gamesObj.getEnemyObj();
+    let playerObj = new gamesObj.getPlayerObj();
 
     function actionGame() {
         // ゲームアクションはここに書く
         function action() {
+
+            // playerロジック
             function playerAction() {
                 // キー押下時
                 document.addEventListener('keydown', event => {
-                    playerObj.keyEvent = event.key;
+                    playerObj.keyEvent = playerObj.getKeyCode(event);
                 });
 
                 // キー外した時
@@ -53,6 +55,28 @@ function getGame() {
             playerAction();
         }
 
+        // enemyロジック
+        changeLevel = () => {
+            enemyObj.level += 1;
+
+            // レベルに応じて時間を増やす
+            changeTime = (isLevel) => {
+
+                getTimer(isLevel);
+
+                function getTimer(level) {
+                    if(4 <= level > 7) {
+                        initObj.gameTimeTimer += initObj.gameTimeTimer;
+                    } else if (7 <= level > 10) {
+                        initObj.gameTimeTimer += initObj.gameTimeTimer;
+                    } else if(10 <= level) {
+                        initObj.gameTimeTimer += (initObj.gameTimeTimer * 2);
+                    }
+                }
+            }
+
+            changeTime(enemyObj.level);
+        }
         // 一定時間経過ロジック
         function timeElapsedLogic() {
             if (initObj.gameTimer) {
@@ -60,8 +84,10 @@ function getGame() {
             }
         
             initObj.gameTimer = setTimeout(function() {
-                getConsole('ゲームが始まってるよ');
                 getConsole('このログは'+(initObj.gameTimeTimer / 1000)+'秒毎おきに出る');
+                getConsole('現在のレベルは'+enemyObj.level+'です');
+                // 一定ロジック
+                changeLevel();
                 timeElapsedLogic();
             }, initObj.gameTimeTimer);
         }

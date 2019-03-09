@@ -17,7 +17,7 @@ var initObj = {
         // ゲーム実行時間
         timer: 0,
         // レベル変化時間
-        passHours: 30,
+        passHours: 5000,
         enemyElements : document.getElementsByClassName('emeny-space')
     },
     playerObj : {
@@ -29,14 +29,29 @@ var initObj = {
         keyEvent : false,
         playerElements : document.getElementsByClassName('player-space'),
         // 機体
-        airCraft : document.getElementsByClassName('aircraft')
-    },
-    // キーコードobj
-    keyCodeObj : {
-        37: 'ArrowLeft',
-        39: 'ArrowRight',
-        38: 'ArrowUp',
-        40: 'ArrowDown'
+        airCraft : document.getElementsByClassName('aircraft'),
+        keyCodeObj : (keyCode) => {
+            switch(keyCode) {
+                case 37:
+                    return 'ArrowLeft';
+                    break;
+                case 39:
+                    return 'ArrowRight';
+                    break;
+                case 38:
+                    return 'ArrowUp';
+                    break;
+                case 40:
+                    return 'ArrowDown';
+                    break;
+                default:
+                    return false;
+                    break;
+            }
+        },
+        getKeyCode : (event) => {
+            return initObj.playerObj.keyCodeObj(event.keyCode);
+        }
     },
     // 画面用処理
     initGames: function() {
@@ -58,20 +73,6 @@ var gamesObj = {
     },
     getPlayerObj : function() {
         return initObj.playerObj;
-    },
-    getKeyCode : function(event) {
-        event.key = initObj.keyCodeObj[event.keyCode];
-        switch(event.key) {
-            case 'ArrowLeft':
-            case 'ArrowRight':
-            case 'ArrowUp':
-            case 'ArrowDown':
-                return true;
-                break;
-            default:
-                return false;
-                break;
-        }
     }
 }
 
