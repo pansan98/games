@@ -112,9 +112,13 @@ class BaseSetting {
      */
     protected function getExceptionsFiles($key, $name)
     {
-        foreach ($this->_exceptionFile[$key] as $keyFile => $valFile) {
-            if ($valFile == $name) {
-                return $valFile;
+        if ($key === 'all') {
+            return $this->_exceptionFile;
+        } else {
+            foreach ($this->_exceptionFile[$key] as $keyFile => $valFile) {
+                if ($valFile == $name) {
+                    return $valFile;
+                }
             }
         }
     }

@@ -98,8 +98,20 @@ class ChildSetting extends BaseSetting {
                     $this->getJsFiles($file . '/');
                 } else {
                     if(file_exists($file)) {
-                        $file = $this->getSpliceStringFile($file);
-                        echo '<script type="text/javascript" src="'. LOCATION_LOCAL_JS_PATH . $file . '" style="display:block;"></script>';
+                        $arrExceptionsJsAllFile = $this->getExceptionsFiles('all');
+                        // 例外ファイルが設定されていれば除去
+                        if (isset($arrExceptionsJsAllFile)) {
+                            foreach ($arrExceptionsJsAllFile as $key => $val) {
+                                // 例外ファイルを読み込まない
+                                if (strpos($file, $key) === false) {
+                                    $file = $this->getSpliceStringFile($file);
+                                    echo '<script type="text/javascript" src="'. LOCATION_LOCAL_JS_PATH . $file . '" style="display:block;"></script>';
+                                }
+                            }
+                        } else {
+                            $file = $this->getSpliceStringFile($file);
+                            echo '<script type="text/javascript" src="'. LOCATION_LOCAL_JS_PATH . $file . '" style="display:block;"></script>';
+                        }
                     }
                 }
             }

@@ -23,19 +23,19 @@ function getGame() {
             getEventOperation = () => {
                 switch(playerObj.keyEvent) {
                     case "ArrowLeft":
-                        playerObj.positionX -= 10;
+                        playerObj.positionX -= playerObj.moveVelocity;
                         playerObj.airCraft[0].style.left = `${playerObj.positionX}px`;
                         break;
                     case "ArrowRight":
-                        playerObj.positionX += 10;
+                        playerObj.positionX += playerObj.moveVelocity;
                         playerObj.airCraft[0].style.left = `${playerObj.positionX}px`;
                         break;
                     case "ArrowUp":
-                        playerObj.positionY -= 10;
+                        playerObj.positionY -= playerObj.moveVelocity;
                         playerObj.airCraft[0].style.top = `${playerObj.positionY}px`;
                         break;
                     case "ArrowDown":
-                        playerObj.positionY += 10;
+                        playerObj.positionY += playerObj.moveVelocity;
                         playerObj.airCraft[0].style.top = `${playerObj.positionY}px`;
                         break;
                     default:

@@ -18,7 +18,7 @@ var initObj = {
         timer: 0,
         // レベル変化時間
         passHours: 5000,
-        enemyElements : document.getElementsByClassName('emeny-space')
+        enemyElements : document.getElementsByClassName('enemy-space')
     },
     playerObj : {
         // 初期体力
@@ -27,6 +27,8 @@ var initObj = {
         positionX : 20,
         positionY : 20,
         keyEvent : false,
+        // 移動速度
+        moveVelocity: 5,
         playerElements : document.getElementsByClassName('player-space'),
         // 機体
         airCraft : document.getElementsByClassName('aircraft'),
