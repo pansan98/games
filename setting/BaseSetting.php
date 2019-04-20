@@ -115,10 +115,14 @@ class BaseSetting {
         if ($key === 'all') {
             return $this->_exceptionFile;
         } else {
-            foreach ($this->_exceptionFile[$key] as $keyFile => $valFile) {
-                if ($valFile == $name) {
-                    return $valFile;
+            if (isset($this->_exceptionFile[$key])) {
+                foreach ($this->_exceptionFile[$key] as $keyFile => $valFile) {
+                    if ($valFile == $name) {
+                        return $valFile;
+                    }
                 }
+            } else {
+                return false;
             }
         }
     }
@@ -131,7 +135,11 @@ class BaseSetting {
      */
     protected function checkExistsExceptionFile($key)
     {
-        return $this->_exceptionFile[$key];
+        if (isset($this->_exceptionFile[$key])) {
+            return $this->_exceptionFile[$key];
+        } else {
+            return false;
+        }
     }
 
 
